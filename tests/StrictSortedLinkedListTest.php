@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 use MartinGold\LinkedList\Exception\InvalidTypeException;
 use MartinGold\LinkedList\StrictSortedLinkedList;
@@ -15,7 +17,6 @@ final class StrictSortedLinkedListTest extends TestCase
         $this->expectExceptionMessage('Cannot insert $value of \'string\' type into collection of type \'int\'');
 
         $list->insert('Hello!');
-
     }
 
     public function testContains(): void

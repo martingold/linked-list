@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 use MartinGold\LinkedList\Comparator\NativeComparator;
 use PHPUnit\Framework\TestCase;

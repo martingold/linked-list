@@ -9,6 +9,9 @@ use MartinGold\LinkedList\Comparator\NativeComparator;
 use MartinGold\LinkedList\Exception\InvalidTypeException;
 use MartinGold\LinkedList\Exception\OutOfBoundsException;
 
+use function get_debug_type;
+use function sprintf;
+
 /**
  * SortedLinkedList decorator with runtime type checking.
  * If your codebase uses strict type-checker like Psalm or PHPStan
@@ -20,18 +23,12 @@ use MartinGold\LinkedList\Exception\OutOfBoundsException;
  */
 final class StrictSortedLinkedList implements Collection
 {
-
-    /**
-     * @var SortedLinkedList<T>
-     */
+    /** @var SortedLinkedList<T> */
     private SortedLinkedList $list;
 
-    /**
-     * @param Comparator|null $comparator
-     * @param class-string<T> $type
-     */
+    /** @param class-string<T> $type */
     public function __construct(
-        readonly private string $type,
+        private readonly string $type,
         Comparator|null $comparator = null,
     ) {
         $this->list = new SortedLinkedList($comparator ?? new NativeComparator());
@@ -42,8 +39,9 @@ final class StrictSortedLinkedList implements Collection
      *
      * @throws InvalidTypeException
      */
-    public function insert($value): void {
-        if (!$this->isValidType($value)) {
+    public function insert($value): void
+    {
+        if (! $this->isValidType($value)) {
             throw new InvalidTypeException(sprintf(
                 'Cannot insert $value of \'%s\' type into collection of type \'%s\'',
                 get_debug_type($value),
@@ -61,11 +59,12 @@ final class StrictSortedLinkedList implements Collection
 
     /**
      * @param T $value
+     *
      * @throws InvalidTypeException
      */
     public function contains(mixed $value): bool
     {
-        if (!$this->isValidType($value)) {
+        if (! $this->isValidType($value)) {
             throw new InvalidTypeException(sprintf(
                 'Cannot check if $value of \'%s\' type is contained in collection of type \'%s\'',
                 get_debug_type($value),
@@ -86,9 +85,7 @@ final class StrictSortedLinkedList implements Collection
         return $this->list->get($index);
     }
 
-    /**
-     * @return T
-     */
+    /** @return T */
     public function current(): mixed
     {
         return $this->list->current();

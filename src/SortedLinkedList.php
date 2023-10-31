@@ -9,20 +9,18 @@ use MartinGold\LinkedList\Comparator\Comparator;
 use MartinGold\LinkedList\Comparator\NativeComparator;
 use MartinGold\LinkedList\Exception\OutOfBoundsException;
 
+use function sprintf;
+
 /**
  * @template T
  * @implements Collection<T>
  */
 final class SortedLinkedList implements Collection
 {
-    /**
-     * @var Node<T>|null
-     */
+    /** @var Node<T>|null */
     private Node|null $head = null;
 
-    /**
-     * @var Node<T>|null
-     */
+    /** @var Node<T>|null */
     private Node|null $iteratorPointer;
 
     private int $iteratorIndex = 0;
@@ -35,15 +33,15 @@ final class SortedLinkedList implements Collection
         $this->comparator = $comparator ?? new NativeComparator();
     }
 
-    /**
-     * @param T $value
-     */
-    public function insert($value): void {
+    /** @param T $value */
+    public function insert($value): void
+    {
         $newNode = new Node($value);
 
         // Make the new node head of list if empty
         if ($this->head === null) {
             $this->head = $newNode;
+
             return;
         }
 
@@ -51,6 +49,7 @@ final class SortedLinkedList implements Collection
         if ($this->comparator->compare($value, $this->head->getValue()) < 0) {
             $newNode->setNext($this->head);
             $this->head = $newNode;
+
             return;
         }
 
@@ -68,9 +67,10 @@ final class SortedLinkedList implements Collection
         $current->setNext($newNode);
     }
 
-    public function length(): int {
+    public function length(): int
+    {
         $current = $this->head;
-        $count = 0;
+        $count   = 0;
 
         while ($current !== null) {
             $count++;
@@ -80,9 +80,7 @@ final class SortedLinkedList implements Collection
         return $count;
     }
 
-    /**
-     * @param T $value
-     */
+    /** @param T $value */
     public function contains(mixed $value): bool
     {
         $current = $this->head;
@@ -103,9 +101,10 @@ final class SortedLinkedList implements Collection
      *
      * @throws OutOfBoundsException
      */
-    public function get(int $index): mixed {
+    public function get(int $index): mixed
+    {
         $current = $this->head;
-        $count = 0;
+        $count   = 0;
 
         while ($current !== null && $count < $index) {
             $current = $current->getNext();
@@ -128,7 +127,8 @@ final class SortedLinkedList implements Collection
      *
      * @throws LogicException
      */
-    public function current(): mixed {
+    public function current(): mixed
+    {
         if ($this->iteratorPointer === null) {
             throw new LogicException('Current node is null');
         }
@@ -136,26 +136,27 @@ final class SortedLinkedList implements Collection
         return $this->iteratorPointer->getValue();
     }
 
-    public function key(): int {
+    public function key(): int
+    {
         return $this->iteratorIndex;
     }
 
-    /**
-     * @return void
-     */
-    public function next(): void {
+    public function next(): void
+    {
         $next = $this->iteratorPointer?->getNext();
 
         $this->iteratorIndex++;
         $this->iteratorPointer = $next;
     }
 
-    public function valid(): bool {
+    public function valid(): bool
+    {
         return $this->iteratorPointer !== null;
     }
 
-    public function rewind(): void {
-        $this->iteratorIndex = 0;
+    public function rewind(): void
+    {
+        $this->iteratorIndex   = 0;
         $this->iteratorPointer = $this->head;
     }
 }

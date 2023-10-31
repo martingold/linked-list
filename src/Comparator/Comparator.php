@@ -4,12 +4,9 @@ declare(strict_types=1);
 
 namespace MartinGold\LinkedList\Comparator;
 
-/**
- * @template T
- */
+/** @template T */
 interface Comparator
 {
-
     /**
      * Mimics spaceship operator behaviour.
      * Return 1 when $a value is greater than $b
@@ -18,8 +15,8 @@ interface Comparator
      *
      * @param T $a
      * @param T $b
+     *
      * @return int<-1, 1>
      */
     public function compare($a, $b): int;
-
 }

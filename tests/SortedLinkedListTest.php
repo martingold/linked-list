@@ -1,7 +1,9 @@
-<?php declare(strict_types=1);
+<?php
 
-use MartinGold\LinkedList\SortedLinkedList;
+declare(strict_types=1);
+
 use MartinGold\LinkedList\Exception\OutOfBoundsException;
+use MartinGold\LinkedList\SortedLinkedList;
 use PHPUnit\Framework\TestCase;
 
 final class SortedLinkedListTest extends TestCase

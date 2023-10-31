@@ -4,49 +4,31 @@ declare(strict_types=1);
 
 namespace MartinGold\LinkedList;
 
-/**
- * @template T
- */
+/** @template T */
 final class Node
 {
-
-    /**
-     * @var T $value
-     */
-    private $value;
-
-    /**
-     * @var Node<T>|null
-     */
+    /** @var Node<T>|null */
     private Node|null $next;
 
-    /**
-     * @param T $value
-     */
-    public function __construct($value) {
-        $this->value = $value;
+    /** @param T $value */
+    public function __construct(private $value)
+    {
         $this->next = null;
     }
 
-    /**
-     * @return T
-     */
+    /** @return T */
     public function getValue()
     {
         return $this->value;
     }
 
-    /**
-     * @return Node<T>|null
-     */
+    /** @return Node<T>|null */
     public function getNext(): Node|null
     {
         return $this->next;
     }
 
-    /**
-     * @param Node<T>|null $next
-     */
+    /** @param Node<T>|null $next */
     public function setNext(Node|null $next): void
     {
         $this->next = $next;

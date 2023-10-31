@@ -13,6 +13,7 @@ class NativeComparator implements Comparator
     /**
      * @param T $a
      * @param T $b
+     *
      * @return int<-1, 1>
      */
     public function compare($a, $b): int
