@@ -8,8 +8,8 @@ use MartinGold\LinkedList\Comparator\Comparator;
 use MartinGold\LinkedList\Comparator\NativeComparator;
 use MartinGold\LinkedList\Exception\InvalidType;
 use MartinGold\LinkedList\Exception\OutOfBounds;
-
 use Traversable;
+
 use function get_debug_type;
 use function sprintf;
 
@@ -19,6 +19,8 @@ use function sprintf;
  * use @see SortedLinkedList instead. This class just wrapper with
  * runtime performance overhead.
  *
+ * The type is inferred from first value inserted to the list.
+ *
  * @template T
  * @implements Collection<T>
  */
@@ -27,7 +29,6 @@ final class StrictSortedLinkedList implements Collection
     /** @var SortedLinkedList<T> */
     private SortedLinkedList $list;
 
-    /** @var string|null*/
     private string|null $type = null;
 
     public function __construct(
@@ -43,15 +44,11 @@ final class StrictSortedLinkedList implements Collection
      */
     public function insert($value): void
     {
-        if ($this->type === null) {
-            $this->type = get_debug_type($value);
-        }
-
         if (! $this->isValidType($value)) {
             throw new InvalidType(sprintf(
                 'Cannot insert $value of \'%s\' type into collection of type \'%s\'',
                 get_debug_type($value),
-                $this->type,
+                $this->type ?? '',
             ));
         }
 
@@ -70,15 +67,11 @@ final class StrictSortedLinkedList implements Collection
      */
     public function contains(mixed $value): bool
     {
-        if ($this->type === null) {
-            $this->type = get_debug_type($value);
-        }
-
         if (! $this->isValidType($value)) {
             throw new InvalidType(sprintf(
                 'Cannot check if $value of \'%s\' type is contained in collection of type \'%s\'',
                 get_debug_type($value),
-                $this->type,
+                $this->type ?? '',
             ));
         }
 
@@ -95,39 +88,16 @@ final class StrictSortedLinkedList implements Collection
         return $this->list->get($index);
     }
 
-    /** @return T */
-    public function current(): mixed
-    {
-        return $this->list->current();
-    }
-
-    public function key(): int
-    {
-        return $this->list->key();
-    }
-
-    public function next(): void
-    {
-        $this->list->next();
-    }
-
-    public function valid(): bool
-    {
-        return $this->list->valid();
-    }
-
-    public function rewind(): void
-    {
-        $this->list->rewind();
-    }
-
-    private function isValidType(mixed $value): bool
-    {
-        return get_debug_type($value) === $this->type;
-    }
-
+    /** @return Traversable<T> */
     public function getIterator(): Traversable
     {
-        // TODO: Implement getIterator() method.
+        return $this->list->getIterator();
+    }
+
+    private function isValidType($value): bool
+    {
+        $this->type ??= get_debug_type($value);
+
+        return get_debug_type($value) === $this->type;
     }
 }

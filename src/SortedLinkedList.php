@@ -8,6 +8,7 @@ use LogicException;
 use MartinGold\LinkedList\Comparator\Comparator;
 use MartinGold\LinkedList\Comparator\NativeComparator;
 use MartinGold\LinkedList\Exception\OutOfBounds;
+use Traversable;
 
 use function sprintf;
 
@@ -158,5 +159,16 @@ final class SortedLinkedList implements Collection
     {
         $this->iteratorIndex   = 0;
         $this->iteratorPointer = $this->head;
+    }
+
+    /** @return Traversable<T> */
+    public function getIterator(): Traversable
+    {
+        $current = $this->head;
+        while ($current !== null) {
+            yield $current->getValue();
+
+            $current = $current->getNext();
+        }
     }
 }

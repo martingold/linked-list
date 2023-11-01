@@ -26,7 +26,7 @@ final class StrictSortedLinkedListTest extends TestCase
 
         $this->assertTrue($list->contains(1));
         $this->expectException(InvalidType::class);
-        $this->expectExceptionMessage('Cannot check if $value of \'string\' type is contained in collection of type \'1\'');
+        $this->expectExceptionMessage('Cannot check if $value of \'string\' type is contained in collection of type \'int\'');
 
         $list->contains('Hello!');
     }
