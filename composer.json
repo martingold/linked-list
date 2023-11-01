@@ -25,7 +25,8 @@
     "scripts": {
         "psalm": "./vendor/bin/psalm",
         "unit": "./vendor/bin/phpunit tests",
-        "cs": "./vendor/bin/phpcs"
+        "cs": "./vendor/bin/phpcs",
+        "csf": "./vendor/bin/phpcbf"
     },
     "config": {
         "allow-plugins": {

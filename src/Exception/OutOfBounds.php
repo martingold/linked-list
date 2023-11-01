@@ -6,6 +6,6 @@ namespace MartinGold\LinkedList\Exception;
 
 use Exception;
 
-final class InvalidTypeException extends Exception
+final class OutOfBounds extends Exception
 {
 }

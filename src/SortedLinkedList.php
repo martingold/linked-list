@@ -7,7 +7,7 @@ namespace MartinGold\LinkedList;
 use LogicException;
 use MartinGold\LinkedList\Comparator\Comparator;
 use MartinGold\LinkedList\Comparator\NativeComparator;
-use MartinGold\LinkedList\Exception\OutOfBoundsException;
+use MartinGold\LinkedList\Exception\OutOfBounds;
 
 use function sprintf;
 
@@ -99,7 +99,7 @@ final class SortedLinkedList implements Collection
     /**
      * @return T
      *
-     * @throws OutOfBoundsException
+     * @throws OutOfBounds
      */
     public function get(int $index): mixed
     {
@@ -112,7 +112,7 @@ final class SortedLinkedList implements Collection
         }
 
         if ($current === null) {
-            throw new OutOfBoundsException(sprintf(
+            throw new OutOfBounds(sprintf(
                 'Trying to access index %s. List has only %s elements.',
                 $index,
                 $this->length(),

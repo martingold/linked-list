@@ -15,4 +15,8 @@
 
     <!-- Include full Doctrine Coding Standard -->
     <rule ref="Doctrine"/>
+
+    <rule ref="PSR1.Classes.ClassDeclaration.MissingNamespace">
+        <exclude-pattern>tests</exclude-pattern>
+    </rule>
 </ruleset>

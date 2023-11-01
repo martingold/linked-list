@@ -4,7 +4,11 @@ declare(strict_types=1);
 
 namespace MartinGold\LinkedList;
 
-/** @template T */
+/**
+ * @internal
+ *
+ * @template T
+ */
 final class Node
 {
     /** @var Node<T>|null */

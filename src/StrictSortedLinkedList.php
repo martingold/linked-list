@@ -6,9 +6,10 @@ namespace MartinGold\LinkedList;
 
 use MartinGold\LinkedList\Comparator\Comparator;
 use MartinGold\LinkedList\Comparator\NativeComparator;
-use MartinGold\LinkedList\Exception\InvalidTypeException;
-use MartinGold\LinkedList\Exception\OutOfBoundsException;
+use MartinGold\LinkedList\Exception\InvalidType;
+use MartinGold\LinkedList\Exception\OutOfBounds;
 
+use Traversable;
 use function get_debug_type;
 use function sprintf;
 
@@ -26,9 +27,10 @@ final class StrictSortedLinkedList implements Collection
     /** @var SortedLinkedList<T> */
     private SortedLinkedList $list;
 
-    /** @param class-string<T> $type */
+    /** @var string|null*/
+    private string|null $type = null;
+
     public function __construct(
-        private readonly string $type,
         Comparator|null $comparator = null,
     ) {
         $this->list = new SortedLinkedList($comparator ?? new NativeComparator());
@@ -37,12 +39,16 @@ final class StrictSortedLinkedList implements Collection
     /**
      * @param T $value
      *
-     * @throws InvalidTypeException
+     * @throws InvalidType
      */
     public function insert($value): void
     {
+        if ($this->type === null) {
+            $this->type = get_debug_type($value);
+        }
+
         if (! $this->isValidType($value)) {
-            throw new InvalidTypeException(sprintf(
+            throw new InvalidType(sprintf(
                 'Cannot insert $value of \'%s\' type into collection of type \'%s\'',
                 get_debug_type($value),
                 $this->type,
@@ -60,12 +66,16 @@ final class StrictSortedLinkedList implements Collection
     /**
      * @param T $value
      *
-     * @throws InvalidTypeException
+     * @throws InvalidType
      */
     public function contains(mixed $value): bool
     {
+        if ($this->type === null) {
+            $this->type = get_debug_type($value);
+        }
+
         if (! $this->isValidType($value)) {
-            throw new InvalidTypeException(sprintf(
+            throw new InvalidType(sprintf(
                 'Cannot check if $value of \'%s\' type is contained in collection of type \'%s\'',
                 get_debug_type($value),
                 $this->type,
@@ -78,7 +88,7 @@ final class StrictSortedLinkedList implements Collection
     /**
      * @return T
      *
-     * @throws OutOfBoundsException
+     * @throws OutOfBounds
      */
     public function get(int $index): mixed
     {
@@ -114,5 +124,10 @@ final class StrictSortedLinkedList implements Collection
     private function isValidType(mixed $value): bool
     {
         return get_debug_type($value) === $this->type;
+    }
+
+    public function getIterator(): Traversable
+    {
+        // TODO: Implement getIterator() method.
     }
 }

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use MartinGold\LinkedList\Exception\OutOfBoundsException;
+use MartinGold\LinkedList\Exception\OutOfBounds;
 use MartinGold\LinkedList\SortedLinkedList;
 use PHPUnit\Framework\TestCase;
 
@@ -59,7 +59,7 @@ final class SortedLinkedListTest extends TestCase
         $list->insert(1);
         $list->insert(2);
 
-        $this->expectException(OutOfBoundsException::class);
+        $this->expectException(OutOfBounds::class);
         $this->expectExceptionMessage('Trying to access index 3. List has only 2 elements.');
 
         $list->get(3);
