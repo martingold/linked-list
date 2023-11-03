@@ -32,9 +32,9 @@ final class StrictSortedLinkedList implements Collection
     private string|null $type = null;
 
     public function __construct(
-        Comparator|null $comparator = null,
+        Comparator $comparator = new NativeComparator(),
     ) {
-        $this->list = new SortedLinkedList($comparator ?? new NativeComparator());
+        $this->list = new SortedLinkedList($comparator);
     }
 
     /**
@@ -94,6 +94,7 @@ final class StrictSortedLinkedList implements Collection
         return $this->list->getIterator();
     }
 
+    /** @param T $value */
     private function isValidType($value): bool
     {
         $this->type ??= get_debug_type($value);

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace MartinGold\LinkedList;
 
-use LogicException;
 use MartinGold\LinkedList\Comparator\Comparator;
 use MartinGold\LinkedList\Comparator\NativeComparator;
 use MartinGold\LinkedList\Exception\OutOfBounds;
@@ -21,17 +20,9 @@ final class SortedLinkedList implements Collection
     /** @var Node<T>|null */
     private Node|null $head = null;
 
-    /** @var Node<T>|null */
-    private Node|null $iteratorPointer;
-
-    private int $iteratorIndex = 0;
-
-    private Comparator $comparator;
-
     public function __construct(
-        Comparator|null $comparator = null,
+        private readonly Comparator $comparator = new NativeComparator(),
     ) {
-        $this->comparator = $comparator ?? new NativeComparator();
     }
 
     /** @param T $value */
@@ -121,44 +112,6 @@ final class SortedLinkedList implements Collection
         }
 
         return $current->getValue();
-    }
-
-    /**
-     * @return T
-     *
-     * @throws LogicException
-     */
-    public function current(): mixed
-    {
-        if ($this->iteratorPointer === null) {
-            throw new LogicException('Current node is null');
-        }
-
-        return $this->iteratorPointer->getValue();
-    }
-
-    public function key(): int
-    {
-        return $this->iteratorIndex;
-    }
-
-    public function next(): void
-    {
-        $next = $this->iteratorPointer?->getNext();
-
-        $this->iteratorIndex++;
-        $this->iteratorPointer = $next;
-    }
-
-    public function valid(): bool
-    {
-        return $this->iteratorPointer !== null;
-    }
-
-    public function rewind(): void
-    {
-        $this->iteratorIndex   = 0;
-        $this->iteratorPointer = $this->head;
     }
 
     /** @return Traversable<T> */
