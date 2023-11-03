@@ -11,6 +11,11 @@ namespace MartinGold\LinkedList\Comparator;
 class NativeComparator implements Comparator
 {
     /**
+     * Mimics spaceship operator behaviour.
+     * Return 1 when $a value is greater than $b
+     * Return 0 when $a value is same as $b value
+     * Return -1 when $a value is lesser than $b
+     *
      * @param T $a
      * @param T $b
      *
