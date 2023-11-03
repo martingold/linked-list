@@ -1,7 +1,6 @@
 # linked-list
 
-Library providing standard sorted linked list implementation. The strict variant is available to ensure types in list (can be used in non-typechecked codebases). Refer to 
-
+Library providing a standard sorted linked list implementation. The strict variant is offered for ensuring types in the list, making it suitable for non-typechecked codebases.
 ## Installation
 
 You can install this library using [Composer](https://getcomposer.org/):
@@ -26,31 +25,77 @@ $list->insert(7);
 var_dump($list->pop());
 ```
 
-in case you need runtime checking (non-typesafe codebase), please use
-`StrictSortedLinkedList` implementation which checks for types at runtime as well.
+Following list operations are supported: `insert`, `get`, `contains`, `shift`, `pop`
+
+In case runtime checking is required in a non-typesafe codebase, consider using the StrictSortedLinkedList implementation, which performs type checking at runtime.
+
+### Implementing custom sorting
+
+The default implementation of sorting is done using spaceship operator.
+You may use your own implementation of `Comparator` in case you need to
+sort values depending on your needs.
+
+```php
+
+use MartinGold\LinkedList\Comparator\Comparator;
+use MartinGold\LinkedList\SortedLinkedList;
+
+class Product
+{
+    public function __construct(
+        public readonly float $quantity, 
+    ){
+        //
+    }
+}
+
+/**
+ * @implements Comparator<Product>
+ */
+class ProductComparator implements Comparator
+{
+    public function compare(Product $a, Product $b): int
+    {
+        return $a->quantity <=> $b->quantity;
+    }
+}
+
+$productList = new SortedLinkedList(new ProductComparator());
+$productList->insert(new Product(20));
+$productList->insert(new Product(31));
+$productList->insert(new Product(12));
+
+foreach ($productList as $product) {
+    echo $product->quantity;
+}
+
+// 12
+// 20
+// 31
+
+```
 
 ## Requirements
 ```
 php >= 8.2
 ```
 
-No other dependecy required.
+No other dependency required.
 
 ## Contributing
 
-Modify the project as needed and then run
+Modify the library as needed and then run
 ```sh
 composer qa
 ```
 
-The script must pass before merging pull request. The script checks for correct coding standard and runs static analysis.
+Please ensure that this script passes successfully before submitting a pull request. The script performs checks for adherence to coding standards and performs static analysis checks.
 
-You may run
+If you encounter code-style errors, you can automatically fix them by running:
 
 ```sh
 composer csf
 ```
-to fix code-style errors automatically.
 
 ## License
 This library is open-source and available under the MIT License.

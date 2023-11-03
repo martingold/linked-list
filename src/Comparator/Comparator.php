@@ -18,5 +18,5 @@ interface Comparator
      *
      * @return int<-1, 1>
      */
-    public function compare($a, $b): int;
+    public function compare(mixed $a, mixed $b): int;
 }
