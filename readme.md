@@ -54,6 +54,11 @@ class Product
  */
 class ProductComparator implements Comparator
 {
+    /**
+     * Returns 1 when $a value is greater than $b.
+     * Returns 0 when $a value is same as $b value.
+     * Returns -1 when $a value is lesser than $b.
+     */
     public function compare(Product $a, Product $b): int
     {
         return $a->quantity <=> $b->quantity;
