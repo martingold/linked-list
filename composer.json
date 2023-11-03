@@ -2,7 +2,7 @@
     "name": "martingold/linked-list",
     "description": "Library providing sorted linked list",
     "type": "library",
-    "license": "MIT 2.0",
+    "license": "MIT",
     "autoload": {
         "psr-4": {
             "MartinGold\\LinkedList\\": "src/"
@@ -20,17 +20,26 @@
     "require-dev": {
         "vimeo/psalm": "^5.15",
         "phpunit/phpunit": "^10",
-        "doctrine/coding-standard": "^12.0"
+        "doctrine/coding-standard": "^12.0",
+        "php-parallel-lint/php-parallel-lint": "*"
     },
     "scripts": {
+        "lint": "./vendor/bin/parallel-lint --exclude vendor .",
         "psalm": "./vendor/bin/psalm",
         "unit": "./vendor/bin/phpunit tests",
         "cs": "./vendor/bin/phpcs",
-        "csf": "./vendor/bin/phpcbf"
+        "csf": "./vendor/bin/phpcbf",
+        "qa": [
+            "@lint",
+            "@cs",
+            "@psalm",
+            "@unit"
+        ]
     },
     "config": {
         "allow-plugins": {
-            "dealerdirect/phpcodesniffer-composer-installer": true
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "phpro/grumphp-shim": false
         }
     }
 }

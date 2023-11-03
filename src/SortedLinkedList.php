@@ -147,6 +147,7 @@ final class SortedLinkedList implements Collection
         if ($current->getNext() === null) {
             $value      = $current->getValue();
             $this->head = null;
+
             return $value;
         }
 
