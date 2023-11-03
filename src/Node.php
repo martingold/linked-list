@@ -21,7 +21,7 @@ final class Node
     }
 
     /** @return T */
-    public function getValue()
+    public function getValue(): mixed
     {
         return $this->value;
     }
