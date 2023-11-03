@@ -12,6 +12,8 @@ use Traversable;
 use function sprintf;
 
 /**
+ * If you need runtime type checking @see StrictSortedLinkedList
+ *
  * @template T
  * @implements Collection<T>
  */
