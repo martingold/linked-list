@@ -101,4 +101,24 @@ final class StrictSortedLinkedList implements Collection
 
         return get_debug_type($value) === $this->type;
     }
+
+    /**
+     * @return T
+     *
+     * @throws OutOfBounds
+     */
+    public function shift(): mixed
+    {
+        return $this->list->shift();
+    }
+
+    /**
+     * @return T
+     *
+     * @throws OutOfBounds
+     */
+    public function pop(): mixed
+    {
+        return $this->list->pop();
+    }
 }

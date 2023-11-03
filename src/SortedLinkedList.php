@@ -114,6 +114,53 @@ final class SortedLinkedList implements Collection
         return $current->getValue();
     }
 
+    /**
+     * @return T
+     *
+     * @throws OutOfBounds
+     */
+    public function shift(): mixed
+    {
+        if ($this->head === null) {
+            throw new OutOfBounds('Cannot shift element on empty collection.');
+        }
+
+        $value = $this->head->getValue();
+
+        $this->head = $this->head->getNext();
+
+        return $value;
+    }
+
+    /**
+     * @return T
+     *
+     * @throws OutOfBounds
+     */
+    public function pop(): mixed
+    {
+        $current = $this->head;
+        if ($current === null) {
+            throw new OutOfBounds('Cannot pop element on empty collection.');
+        }
+
+        if ($current->getNext() === null) {
+            $value      = $current->getValue();
+            $this->head = null;
+            return $value;
+        }
+
+        while ($current->getNext()?->getNext() !== null) {
+            $current = $current->getNext();
+        }
+
+        /** @psalm-suppress PossiblyNullReference Null checked in while loop */
+        $value = $current->getNext()->getValue();
+        $current->setNext(null);
+
+        return $value;
+    }
+
     /** @return Traversable<T> */
     public function getIterator(): Traversable
     {

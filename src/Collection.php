@@ -22,4 +22,10 @@ interface Collection extends IteratorAggregate
 
     /** @param T $value */
     public function contains(mixed $value): bool;
+
+    /** @return T */
+    public function shift(): mixed;
+
+    /** @return T */
+    public function pop(): mixed;
 }

@@ -64,4 +64,56 @@ final class SortedLinkedListTest extends TestCase
 
         $list->get(3);
     }
+
+    public function testLength(): void
+    {
+        $list = new SortedLinkedList();
+        $list->insert(1);
+        $list->insert(2);
+        $list->insert(3);
+
+        $this->assertEquals(3, $list->length());
+    }
+
+    public function testPop(): void
+    {
+        $list = new SortedLinkedList();
+        $list->insert(1);
+        $list->insert(2);
+        $list->insert(3);
+
+        $this->assertEquals(3, $list->pop());
+        $this->assertEquals(2, $list->length());
+    }
+
+    public function testEmptyPop(): void
+    {
+        $list = new SortedLinkedList();
+
+        $this->expectException(OutOfBounds::class);
+        $this->expectExceptionMessage('Cannot pop element on empty collection.');
+
+        $list->pop();
+    }
+
+    public function testShift(): void
+    {
+        $list = new SortedLinkedList();
+        $list->insert(1);
+        $list->insert(2);
+        $list->insert(3);
+
+        $this->assertEquals(1, $list->shift());
+        $this->assertEquals(2, $list->length());
+    }
+
+    public function testEmptyShift(): void
+    {
+        $list = new SortedLinkedList();
+
+        $this->expectException(OutOfBounds::class);
+        $this->expectExceptionMessage('Cannot shift element on empty collection.');
+
+        $list->shift();
+    }
 }
